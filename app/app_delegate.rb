@@ -1,6 +1,7 @@
 class AppDelegate
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
+    UIApplication.sharedApplication.setStatusBarHidden true, animated: false
 
     @director = Joybox::Configuration.setup do
       director display_stats: true
@@ -12,6 +13,8 @@ class AppDelegate
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     @window.setRootViewController(@navigation_controller)
     @window.makeKeyAndVisible
+
+    @director << GameLayer.scene
     true
   end
 
