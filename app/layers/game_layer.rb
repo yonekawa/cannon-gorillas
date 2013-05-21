@@ -1,8 +1,15 @@
 class GameLayer < Joybox::Core::Layer
   scene
 
+  GORILLA_WIDTH  = 28
+  GORILLA_HEIGHT = 34
+
   def on_enter
     init_world
+
+    @destroyBodyQueue = []
+    @is_gorilla_fired = false
+    create_new_gorilla
 
     on_touches_ended do |touches, event|
       touch = touches.anyObject
@@ -12,14 +19,14 @@ class GameLayer < Joybox::Core::Layer
       fire(location)
     end
 
-    @destroyBodyQueue = []
-
     schedule_update do |delta|
       @world.step(delta: delta)
 
       @destroyBodyQueue.each do |sprite|
         @world.removeBody(sprite.body)
-        self.removeChild(sprite)
+        @is_gorilla_fired = false
+
+        self.scheduleOnce('create_new_gorilla', delay: 1.0)
       end
       @destroyBodyQueue = []
     end
@@ -44,41 +51,52 @@ class GameLayer < Joybox::Core::Layer
     end
   end
 
-  def fire(location)
-    cannon_ball = create_cannon_ball
-    return unless cannon_ball
+  def fire(to)
+    return unless @gorilla
 
-    self << cannon_ball
-    cannon_ball.body.apply_force(force: [300 * (location.x / 100), 300 * (location.y / 100)])
+    distanceX = (to.x - @gorilla.position.x).abs
+    distanceX *= -1 if to.x < @gorilla.position.x
+    @gorilla.body.apply_force(force: [300 * (distanceX / 50), 300])
+    @gorilla.body.apply_torque(torque: 20)
+
+    @is_gorilla_fired = true
   end
 
-  def create_cannon_ball
-    return nil if @cannon_ball
+  def explosion(position)
 
-    @cannon_ball_body = @world.new_body(
-      position: [100, 100],
+  end
+
+  def create_new_gorilla
+    return nil if @gorilla
+
+    @gorilla_body = @world.new_body(
+      position: [Screen.half_width - (GORILLA_WIDTH / 2), GORILLA_HEIGHT],
       type: KDynamicBodyType
     ) do
       polygon_fixture(
-        box: [28, 34],
+        box: [GORILLA_WIDTH, GORILLA_HEIGHT],
         friction: 0.3,
         density: 1.0
       )
     end
 
-    @cannon_ball = PhysicsSprite.new(file_name: 'gorilla.png', body: @cannon_ball_body)
-    @world.when_collide(@cannon_ball_body) do |collision_body, is_touching|
-      # App crashes by assertion error if removing body here
-      @destroyBodyQueue << @cannon_ball
+    @gorilla = PhysicsSprite.new(file_name: 'gorilla.png', body: @gorilla_body)
+    @world.when_collide(@gorilla_body) do |collision_body, is_touching|
+      if @is_gorilla_fired
+        # App crashes by assertion error if removing body here
+        @destroyBodyQueue << @gorilla
 
-      explosion = CCParticleExplosion.node
-      explosion.position = @cannon_ball.position
-      self << explosion
+        explosion = CCParticleExplosion.node
+        explosion.position = @gorilla.position
+        explosion.duration = 1.0
+        explosion.autoRemoveOnFinish = true
+        self << explosion
 
-      self.removeChild(@cannon_ball)
-      @cannon_ball = nil
+        self.removeChild(@gorilla)
+        @gorilla = nil
+      end
     end
 
-    @cannon_ball
+    self << @gorilla
   end
 end
