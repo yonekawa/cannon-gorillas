@@ -8,18 +8,23 @@ class GameLayer < Joybox::Core::Layer
     @scene = parent
     @is_game_over = false
     @is_caught_banana = false
+    @is_fired_gorilla = true
 
     init_world
 
-    create_gorilla
+    create_new_gorilla
     create_new_banana
 
     on_touches_ended do |touches, event|
-      touch = touches.anyObject
-      location = touch.locationInView(touch.view)
-      location = Director.sharedDirector.convertToGL(location)
+      unless @is_fired_gorilla
+        @is_fired_gorilla = true
 
-      fire(location)
+        touch = touches.anyObject
+        location = touch.locationInView(touch.view)
+        location = Director.sharedDirector.convertToGL(location)
+
+        fire(location)
+      end
     end
 
     schedule_update do |delta|
@@ -33,6 +38,11 @@ class GameLayer < Joybox::Core::Layer
     @world.step(delta: delta)
 
     unless @gorilla.body.isAwake
+      if @is_fired_gorilla
+        @is_fired_gorilla = false
+        create_new_gorilla
+      end
+
       if @is_caught_banana
         @is_caught_banana = false
         create_new_banana
@@ -89,9 +99,16 @@ class GameLayer < Joybox::Core::Layer
     @gorilla.body.apply_force(force: [distance_x, distance_y])
   end
 
-  def create_gorilla
+  def create_new_gorilla
+    position = [Screen.half_width - (GORILLA_WIDTH / 2), GORILLA_HEIGHT]
+    if @gorilla
+      position = [@gorilla.position.x, @gorilla.position.y]
+      @world.removeBody(@gorilla.body)
+      self.removeChild(@gorilla)
+    end
+
     @gorilla_body = @world.new_body(
-      position: [Screen.half_width - (GORILLA_WIDTH / 2), GORILLA_HEIGHT],
+      position: position,
       type: KDynamicBodyType
     ) do
       polygon_fixture(
@@ -118,7 +135,7 @@ class GameLayer < Joybox::Core::Layer
       file_name: 'good_banana.png',
       position: [
         random.rand(min_x..Screen.width - min_x),
-        random.rand(min_y..Screen.height - min_y)
+        random.rand(min_y..(Screen.height - BANANA_HEIGHT))
       ]
     )
     @good_banana.run_action(banana_move)
@@ -127,7 +144,7 @@ class GameLayer < Joybox::Core::Layer
       file_name: 'bad_banana.png',
       position: [
         random.rand(min_x..Screen.width - min_x),
-        random.rand(min_y..Screen.height - min_y)
+        random.rand(min_y..(Screen.height - BANANA_HEIGHT))
       ]
     )
     @bad_banana.run_action(banana_move)
@@ -148,10 +165,12 @@ class GameLayer < Joybox::Core::Layer
   end
 
   def sprite_rect(sprite)
-    h = sprite.contentSize.height
-    w = sprite.contentSize.width
-    x = sprite.position.x - w / 2
-    y = sprite.position.y - h / 2
+    bounds_factor = 10
+
+    h = sprite.contentSize.height - bounds_factor
+    w = sprite.contentSize.width - bounds_factor
+    x = sprite.position.x - w / 2 + bounds_factor
+    y = sprite.position.y - h / 2 + bounds_factor
     CGRectMake(x, y, w, h)
   end
 
