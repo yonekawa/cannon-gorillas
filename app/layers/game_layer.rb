@@ -57,13 +57,9 @@ class GameLayer < Joybox::Core::Layer
     distanceX = (to.x - @gorilla.position.x).abs
     distanceX *= -1 if to.x < @gorilla.position.x
     @gorilla.body.apply_force(force: [300 * (distanceX / 50), 300])
-    @gorilla.body.apply_torque(torque: 20)
+    @gorilla.body.apply_torque(torque: 50)
 
     @is_gorilla_fired = true
-  end
-
-  def explosion(position)
-
   end
 
   def create_new_gorilla
