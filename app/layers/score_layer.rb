@@ -5,6 +5,8 @@ class ScoreLayer < Joybox::Core::Layer
   LABEL_WIDTH = 60
   LABEL_HEIGHT = 20
 
+  attr_accessor :score
+
   def on_enter
     @score = 0
 

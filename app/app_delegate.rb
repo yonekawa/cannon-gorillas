@@ -4,7 +4,7 @@ class AppDelegate
     UIApplication.sharedApplication.setStatusBarHidden true, animated: false
 
     @director = Joybox::Configuration.setup do
-      director display_stats: true
+      director display_stats: false
     end
 
     @navigation_controller = UINavigationController.alloc.initWithRootViewController(@director)

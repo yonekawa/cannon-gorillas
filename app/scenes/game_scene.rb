@@ -1,5 +1,7 @@
 class GameScene < Joybox::Core::Scene
 
+  attr_accessor :game_layer, :score_layer
+
   def on_enter
     @background_layer = BackgroundLayer.new
     self << @background_layer
@@ -9,9 +11,5 @@ class GameScene < Joybox::Core::Scene
 
     @score_layer = ScoreLayer.new
     self << @score_layer
-  end
-
-  def increment_score
-    @score_layer.increment_score
   end
 end

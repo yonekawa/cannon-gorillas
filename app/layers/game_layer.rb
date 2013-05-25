@@ -5,15 +5,14 @@ class GameLayer < Joybox::Core::Layer
   BANANA_HEIGHT = 44
 
   def on_enter
-    init_world
+    @scene = parent
+    @is_game_over = false
+    @is_caught_banana = false
 
-    # @is_gorilla_fired = false
-    # @destroyBodyQueue = []
+    init_world
 
     create_gorilla
     create_new_banana
-
-    @is_caught_banana = false
 
     on_touches_ended do |touches, event|
       touch = touches.anyObject
@@ -24,39 +23,46 @@ class GameLayer < Joybox::Core::Layer
     end
 
     schedule_update do |delta|
-      @world.step(delta: delta)
-
-      if @good_banana && CGRectIntersectsRect(sprite_rect(@gorilla), sprite_rect(@good_banana))
-        unless @is_caught_banana
-          @is_caught_banana = true
-
-          self.removeChild(@good_banana)
-          @good_banana = nil
-          parent.increment_score
-        end
-      end
-
-      unless @gorilla.body.isAwake
-        if @is_caught_banana
-          @is_caught_banana = false
-          create_new_banana
-        end
-      end
-
-      # @destroyBodyQueue.each do |sprite|
-      #  @world.removeBody(sprite.body)
-      #  @is_gorilla_fired = false
-      #
-      #  self.scheduleOnce('create_new_gorilla', delay: 1.0)
-      #end
-      # @destroyBodyQueue = []
+      game_tick(delta) unless @is_game_over
     end
   end
 
-  def on_exit
-  end
-
   private
+
+  def game_tick(delta)
+    @world.step(delta: delta)
+
+    unless @gorilla.body.isAwake
+      if @is_caught_banana
+        @is_caught_banana = false
+        create_new_banana
+      end
+    end
+
+    if @good_banana && CGRectIntersectsRect(sprite_rect(@gorilla), sprite_rect(@good_banana))
+      unless @is_caught_banana
+        @is_caught_banana = true
+
+        self.removeChild(@good_banana)
+        @good_banana = nil
+
+        @scene.score_layer.increment_score
+      end
+    end
+
+    if CGRectIntersectsRect(sprite_rect(@gorilla), sprite_rect(@bad_banana))
+      explosion = CCParticleExplosion.node
+      explosion.position = CGPointMake(@gorilla.position.x, @gorilla.position.y)
+      explosion.duration = 1.0
+      explosion.autoRemoveOnFinish = true
+      self << explosion
+
+      @world.removeBody(@gorilla.body)
+      self.removeChild(@gorilla)
+
+      game_over
+    end
+  end
 
   def init_world
     @world = World.new(gravity: [0, -10])
@@ -96,22 +102,6 @@ class GameLayer < Joybox::Core::Layer
     end
 
     @gorilla = PhysicsSprite.new(file_name: 'gorilla.png', body: @gorilla_body)
-    # @world.when_collide(@gorilla_body) do |collision_body, is_touching|
-    #  if @is_gorilla_fired
-    #    # App crashes by assertion error if removing body here
-    #    @destroyBodyQueue << @gorilla
-    #
-    #    explosion = CCParticleExplosion.node
-    #    explosion.position = @gorilla.position
-    #    explosion.duration = 1.0
-    #    explosion.autoRemoveOnFinish = true
-    #    self << explosion
-    #
-    #    self.removeChild(@gorilla)
-    #    @gorilla = nil
-    #  end
-    #end
-
     self << @gorilla
   end
 
@@ -160,8 +150,17 @@ class GameLayer < Joybox::Core::Layer
   def sprite_rect(sprite)
     h = sprite.contentSize.height
     w = sprite.contentSize.width
-    x = sprite.position.x - w/2
-    y = sprite.position.y - h/2
+    x = sprite.position.x - w / 2
+    y = sprite.position.y - h / 2
     CGRectMake(x, y, w, h)
+  end
+
+  def game_over
+    @is_game_over = true
+
+    game_over_layer = GameOverLayer.new(@scene.score_layer.score)
+    @scene << game_over_layer
+
+    @scene.removeChild(@scene.score_layer)
   end
 end
