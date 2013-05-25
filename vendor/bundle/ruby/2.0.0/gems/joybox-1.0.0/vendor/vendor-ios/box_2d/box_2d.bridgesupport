@@ -36,6 +36,9 @@
 <arg name='boxBody' index='0' declared_type='id' type='@'/>
 <retval declared_type='id' type='@'/>
 </method>
+<method selector='isAwake'>
+<retval declared_type='BOOL' type='B'/>
+</method>
 <method selector='isSleepingAllowed'>
 <retval declared_type='BOOL' type='B'/>
 </method>

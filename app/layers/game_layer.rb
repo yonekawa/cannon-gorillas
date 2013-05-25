@@ -7,15 +7,15 @@ class GameLayer < Joybox::Core::Layer
   def on_enter
     init_world
 
-    @destroyBodyQueue = []
-    @is_gorilla_fired = false
+    # @is_gorilla_fired = false
+    # @destroyBodyQueue = []
 
-    create_new_gorilla
+    create_gorilla
     create_new_banana
 
-    on_touches_ended do |touches, event|
-      parent.increment_score
+    @is_caught_banana = false
 
+    on_touches_ended do |touches, event|
       touch = touches.anyObject
       location = touch.locationInView(touch.view)
       location = Director.sharedDirector.convertToGL(location)
@@ -26,13 +26,30 @@ class GameLayer < Joybox::Core::Layer
     schedule_update do |delta|
       @world.step(delta: delta)
 
-      @destroyBodyQueue.each do |sprite|
-        @world.removeBody(sprite.body)
-        @is_gorilla_fired = false
+      if @good_banana && CGRectIntersectsRect(sprite_rect(@gorilla), sprite_rect(@good_banana))
+        unless @is_caught_banana
+          @is_caught_banana = true
 
-        self.scheduleOnce('create_new_gorilla', delay: 1.0)
+          self.removeChild(@good_banana)
+          @good_banana = nil
+          parent.increment_score
+        end
       end
-      @destroyBodyQueue = []
+
+      unless @gorilla.body.isAwake
+        if @is_caught_banana
+          @is_caught_banana = false
+          create_new_banana
+        end
+      end
+
+      # @destroyBodyQueue.each do |sprite|
+      #  @world.removeBody(sprite.body)
+      #  @is_gorilla_fired = false
+      #
+      #  self.scheduleOnce('create_new_gorilla', delay: 1.0)
+      #end
+      # @destroyBodyQueue = []
     end
   end
 
@@ -56,8 +73,6 @@ class GameLayer < Joybox::Core::Layer
   end
 
   def fire(to)
-    return unless @gorilla
-
     distance_x = (to.x - @gorilla.position.x).abs * 10
     distance_y = (to.y - @gorilla.position.y).abs * 15
     distance_x *= -1 if to.x < @gorilla.position.x
@@ -66,13 +81,9 @@ class GameLayer < Joybox::Core::Layer
 
     @gorilla.body.apply_torque(torque: torque)
     @gorilla.body.apply_force(force: [distance_x, distance_y])
-
-    @is_gorilla_fired = true
   end
 
-  def create_new_gorilla
-    return nil if @gorilla
-
+  def create_gorilla
     @gorilla_body = @world.new_body(
       position: [Screen.half_width - (GORILLA_WIDTH / 2), GORILLA_HEIGHT],
       type: KDynamicBodyType
@@ -105,19 +116,22 @@ class GameLayer < Joybox::Core::Layer
   end
 
   def create_new_banana
+    self.removeChild(@good_banana) if @good_banana
+    self.removeChild(@bad_banana) if @bad_banana
+
     min_x = BANANA_WIDTH / 2
-    min_y = BANANA_HEIGHT / 2
+    min_y = BANANA_HEIGHT + GORILLA_HEIGHT
 
     random = Random.new(Time.new.to_i)
 
-    @great_banana = Sprite.new(
-      file_name: 'great_banana.png',
+    @good_banana = Sprite.new(
+      file_name: 'good_banana.png',
       position: [
-        random.rand(0..Screen.width),
-        random.rand(20..Screen.height)
+        random.rand(min_x..Screen.width - min_x),
+        random.rand(min_y..Screen.height - min_y)
       ]
     )
-    @great_banana.run_action(banana_move)
+    @good_banana.run_action(banana_move)
 
     @bad_banana = Sprite.new(
       file_name: 'bad_banana.png',
@@ -128,7 +142,7 @@ class GameLayer < Joybox::Core::Layer
     )
     @bad_banana.run_action(banana_move)
 
-    self << @great_banana
+    self << @good_banana
     self << @bad_banana
   end
 
@@ -141,5 +155,13 @@ class GameLayer < Joybox::Core::Layer
     ])
 
     Repeat.forever(action: action)
+  end
+
+  def sprite_rect(sprite)
+    h = sprite.contentSize.height
+    w = sprite.contentSize.width
+    x = sprite.position.x - w/2
+    y = sprite.position.y - h/2
+    CGRectMake(x, y, w, h)
   end
 end
