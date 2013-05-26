@@ -127,7 +127,7 @@ class GameLayer < Joybox::Core::Layer
     self.removeChild(@bad_banana) if @bad_banana
 
     min_x = BANANA_WIDTH / 2
-    min_y = BANANA_HEIGHT + GORILLA_HEIGHT
+    min_y = BANANA_HEIGHT * 2 + GORILLA_HEIGHT
 
     random = Random.new(Time.new.to_i)
 
