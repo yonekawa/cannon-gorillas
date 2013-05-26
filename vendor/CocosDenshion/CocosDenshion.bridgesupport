@@ -1,0 +1,715 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<struct name='bufferInfo' type='{_bufferInfo=&quot;bufferId&quot;I&quot;bufferState&quot;i&quot;bufferData&quot;^v&quot;format&quot;i&quot;sizeInBytes&quot;i&quot;frequencyInHertz&quot;i}'>
+<field name='bufferId' type='I' declared_type='ALuint'/>
+<field name='bufferState' type='i' declared_type='int'/>
+<field name='bufferData' type='^v' declared_type='void*'/>
+<field name='format' type='i' declared_type='ALenum'/>
+<field name='sizeInBytes' type='i' declared_type='ALsizei'/>
+<field name='frequencyInHertz' type='i' declared_type='ALsizei'/>
+</struct>
+<struct name='sourceGroup' type='{_sourceGroup=&quot;startIndex&quot;i&quot;currentIndex&quot;i&quot;totalSources&quot;i&quot;enabled&quot;B&quot;nonInterruptible&quot;B&quot;sourceStatuses&quot;^i}'>
+<field name='startIndex' type='i' declared_type='int'/>
+<field name='currentIndex' type='i' declared_type='int'/>
+<field name='totalSources' type='i' declared_type='int'/>
+<field name='enabled' type='B' declared_type='_Bool'/>
+<field name='nonInterruptible' type='B' declared_type='_Bool'/>
+<field name='sourceStatuses' type='^i' declared_type='int*'/>
+</struct>
+<struct name='sourceInfo' type='{_sourceInfo=&quot;usable&quot;B&quot;sourceId&quot;I&quot;attachedBufferId&quot;I}'>
+<field name='usable' type='B' declared_type='_Bool'/>
+<field name='sourceId' type='I' declared_type='ALuint'/>
+<field name='attachedBufferId' type='I' declared_type='ALuint'/>
+</struct>
+<constant name='kCDN_AsynchLoadComplete' const='true' type='@' declared_type='NSString*'/>
+<constant name='kCDN_AudioManagerInitialised' const='true' type='@' declared_type='NSString*'/>
+<constant name='kCDN_BadAlContext' const='true' type='@' declared_type='NSString*'/>
+<constant name='kCDNoBuffer' const='true' type='i' declared_type='int'/>
+<constant name='kCD_GainDefault' const='true' type='f' declared_type='float'/>
+<constant name='kCD_PanDefault' const='true' type='f' declared_type='float'/>
+<constant name='kCD_PanFullLeft' const='true' type='f' declared_type='float'/>
+<constant name='kCD_PanFullRight' const='true' type='f' declared_type='float'/>
+<constant name='kCD_PitchDefault' const='true' type='f' declared_type='float'/>
+<constant name='kCD_PitchHigherOneOctave' const='true' type='f' declared_type='float'/>
+<constant name='kCD_PitchLowerOneOctave' const='true' type='f' declared_type='float'/>
+<string_constant name='COCOSDENSHION_VERSION' value='Aphex.rc'/>
+<enum name='CD_BS_EMPTY' value='0'/>
+<enum name='CD_BS_FAILED' value='2'/>
+<enum name='CD_BS_LOADED' value='1'/>
+<enum name='CD_BUFFERS_INCREMENT' value='16'/>
+<enum name='CD_BUFFERS_START' value='64'/>
+<enum name='CD_IGNORE_AUDIO_SESSION' value='200211438'/>
+<enum name='CD_MUTE' value='267312043'/>
+<enum name='CD_NO_SOURCE' value='267313068'/>
+<enum name='CD_SAMPLE_RATE_BASIC' value='8000'/>
+<enum name='CD_SAMPLE_RATE_DEFAULT' value='44100'/>
+<enum name='CD_SAMPLE_RATE_HIGH' value='44100'/>
+<enum name='CD_SAMPLE_RATE_LOW' value='16000'/>
+<enum name='CD_SAMPLE_RATE_MID' value='22050'/>
+<enum name='CD_SOURCE_LIMIT' value='32'/>
+<enum name='kAMM_FxOnly' value='0'/>
+<enum name='kAMM_FxPlusMusic' value='1'/>
+<enum name='kAMM_FxPlusMusicIfNoOtherAudio' value='2'/>
+<enum name='kAMM_MediaPlayback' value='3'/>
+<enum name='kAMM_PlayAndRecord' value='4'/>
+<enum name='kAMRBDoNothing' value='0'/>
+<enum name='kAMRBStop' value='2'/>
+<enum name='kAMRBStopPlay' value='1'/>
+<enum name='kAMStateInitialised' value='2'/>
+<enum name='kAMStateInitialising' value='1'/>
+<enum name='kAMStateUninitialised' value='0'/>
+<enum name='kASC_Left' value='0'/>
+<enum name='kASC_Right' value='1'/>
+<enum name='kIT_Exponential' value='2'/>
+<enum name='kIT_Linear' value='0'/>
+<enum name='kIT_SCurve' value='1'/>
+<enum name='kLAS_Init' value='0'/>
+<enum name='kLAS_Loaded' value='1'/>
+<enum name='kLAS_Paused' value='3'/>
+<enum name='kLAS_Playing' value='2'/>
+<enum name='kLAS_Stopped' value='4'/>
+<function name='CDGetOpenALAudioData'>
+<arg name='inFileURL' type='^{__CFURL=}' declared_type='CFURLRef'/>
+<arg name='outDataSize' type='^i' declared_type='ALsizei*'/>
+<arg name='outDataFormat' type='^i' declared_type='ALenum*'/>
+<arg name='outSampleRate' type='^i' declared_type='ALsizei*'/>
+<retval type='^v' declared_type='void*'/>
+</function>
+<function name='CDloadCafAudioData'>
+<arg name='inFileURL' type='^{__CFURL=}' declared_type='CFURLRef'/>
+<arg name='outDataSize' type='^i' declared_type='ALsizei*'/>
+<arg name='outDataFormat' type='^i' declared_type='ALenum*'/>
+<arg name='outSampleRate' type='^i' declared_type='ALsizei*'/>
+<retval type='^v' declared_type='void*'/>
+</function>
+<function name='CDloadWaveAudioData'>
+<arg name='inFileURL' type='^{__CFURL=}' declared_type='CFURLRef'/>
+<arg name='outDataSize' type='^i' declared_type='ALsizei*'/>
+<arg name='outDataFormat' type='^i' declared_type='ALenum*'/>
+<arg name='outSampleRate' type='^i' declared_type='ALsizei*'/>
+<retval type='^v' declared_type='void*'/>
+</function>
+<class name='CDAsynchBufferLoader'>
+<method selector='init:soundEngine:'>
+<arg name='loadRequests' index='0' type='@' declared_type='NSArray*'/>
+<arg name='theSoundEngine' index='1' type='@' declared_type='CDSoundEngine*'/>
+<retval type='@' declared_type='id'/>
+</method>
+</class>
+<class name='CDAudioInterruptTargetGroup'>
+<method selector='addAudioInterruptTarget:'>
+<arg name='interruptibleTarget' index='0' type='@' declared_type='NSObject*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='CDAudioManager'>
+<method selector='applicationDidBecomeActive'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='applicationWillResignActive'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='audioSessionInterrupted'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='audioSessionResumed'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='audioSourceForChannel:'>
+<arg name='channel' index='0' type='i' declared_type='tAudioSourceChannel'/>
+<retval type='@' declared_type='CDLongAudioSource*'/>
+</method>
+<method selector='audioSourceLoad:channel:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<arg name='channel' index='1' type='i' declared_type='tAudioSourceChannel'/>
+<retval type='@' declared_type='CDLongAudioSource*'/>
+</method>
+<method selector='backgroundMusic'>
+<retval type='@' declared_type='CDLongAudioSource*'/>
+</method>
+<method selector='configure:' class_method='true'>
+<arg name='mode' index='0' type='i' declared_type='tAudioManagerMode'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='end' class_method='true'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='init:'>
+<arg name='mode' index='0' type='i' declared_type='tAudioManagerMode'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initAsynchronously:' class_method='true'>
+<arg name='mode' index='0' type='i' declared_type='tAudioManagerMode'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='isBackgroundMusicPlaying'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='isDeviceMuted'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='isOtherAudioPlaying'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='pauseBackgroundMusic'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='playBackgroundMusic:loop:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<arg name='loop' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='preloadBackgroundMusic:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='resumeBackgroundMusic'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='rewindBackgroundMusic'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setBackgroundMusicCompletionListener:selector:'>
+<arg name='listener' index='0' type='@' declared_type='id'/>
+<arg name='selector' index='1' type=':' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setMode:'>
+<arg name='mode' index='0' type='i' declared_type='tAudioManagerMode'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setResignBehavior:autoHandle:'>
+<arg name='resignBehavior' index='0' type='i' declared_type='tAudioManagerResignBehavior'/>
+<arg name='autoHandle' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='sharedManager' class_method='true'>
+<retval type='@' declared_type='CDAudioManager*'/>
+</method>
+<method selector='sharedManagerState' class_method='true'>
+<retval type='i' declared_type='tAudioManagerState'/>
+</method>
+<method selector='soundEngine'>
+<retval type='@' declared_type='CDSoundEngine*'/>
+</method>
+<method selector='stopBackgroundMusic'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='willPlayBackgroundMusic'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+</class>
+<class name='CDBufferLoadRequest'>
+<method selector='filePath'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='init:filePath:'>
+<arg name='theSoundId' index='0' type='i' declared_type='int'/>
+<arg name='theFilePath' index='1' const='true' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='soundId'>
+<retval type='i' declared_type='int'/>
+</method>
+</class>
+<class name='CDBufferManager'>
+<method selector='bufferForFile:create:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<arg name='create' index='1' type='B' declared_type='BOOL'/>
+<retval type='i' declared_type='int'/>
+</method>
+<method selector='initWithEngine:'>
+<arg name='theSoundEngine' index='0' type='@' declared_type='CDSoundEngine*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='releaseBufferForFile:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='CDFloatInterpolator'>
+<method selector='end'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='init:startVal:endVal:'>
+<arg name='type' index='0' type='i' declared_type='tCDInterpolationType'/>
+<arg name='startVal' index='1' type='f' declared_type='float'/>
+<arg name='endVal' index='2' type='f' declared_type='float'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='interpolate:'>
+<arg name='t' index='0' type='f' declared_type='float'/>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='interpolationType'>
+<retval type='i' declared_type='tCDInterpolationType'/>
+</method>
+<method selector='setEnd:'>
+<arg name='end' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setInterpolationType:'>
+<arg name='interpolationType' index='0' type='i' declared_type='tCDInterpolationType'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setStart:'>
+<arg name='start' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='start'>
+<retval type='f' declared_type='float'/>
+</method>
+</class>
+<class name='CDLongAudioSource'>
+<method selector='audioSourceFilePath'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='audioSourcePlayer'>
+<retval type='@' declared_type='AVAudioPlayer*'/>
+</method>
+<method selector='backgroundMusic'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='delegate'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='isPlaying'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='load:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='numberOfLoops'>
+<retval type='i' declared_type='NSInteger'/>
+</method>
+<method selector='pause'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='play'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='resume'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='rewind'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setBackgroundMusic:'>
+<arg name='backgroundMusic' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setDelegate:'>
+<arg name='delegate' index='0' type='@' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setNumberOfLoops:'>
+<arg name='numberOfLoops' index='0' type='i' declared_type='NSInteger'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setVolume:'>
+<arg name='volume' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='stop'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='volume'>
+<retval type='f' declared_type='float'/>
+</method>
+</class>
+<class name='CDPropertyModifier'>
+<method selector='_allowableType'>
+<retval type='#' declared_type='Class'/>
+</method>
+<method selector='_getTargetProperty'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='_setTargetProperty:'>
+<arg name='newVal' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='_stopTarget'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='endValue'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='init:interpolationType:startVal:endVal:'>
+<arg name='theTarget' index='0' type='@' declared_type='id'/>
+<arg name='type' index='1' type='i' declared_type='tCDInterpolationType'/>
+<arg name='startVal' index='2' type='f' declared_type='float'/>
+<arg name='endVal' index='3' type='f' declared_type='float'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='interpolationType'>
+<retval type='i' declared_type='tCDInterpolationType'/>
+</method>
+<method selector='modify:'>
+<arg name='t' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setEndValue:'>
+<arg name='endValue' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setInterpolationType:'>
+<arg name='interpolationType' index='0' type='i' declared_type='tCDInterpolationType'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setStartValue:'>
+<arg name='startValue' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setStopTargetWhenComplete:'>
+<arg name='stopTargetWhenComplete' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='startValue'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='stopTargetWhenComplete'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+</class>
+<class name='CDSoundEngine'>
+<method selector='_soundSourcePreRelease:'>
+<arg name='soundSource' index='0' type='@' declared_type='CDSoundSource*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='asynchLoadProgress'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='bufferDurationInSeconds:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='bufferFrequencyInHertz:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<retval type='i' declared_type='ALsizei'/>
+</method>
+<method selector='bufferSizeInBytes:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<retval type='i' declared_type='ALsizei'/>
+</method>
+<method selector='defineSourceGroups:'>
+<arg name='sourceGroupDefinitions' index='0' type='@' declared_type='NSArray*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='defineSourceGroups:total:'>
+<arg name='sourceGroupDefinitions' index='0' type='^i' declared_type='int*'/>
+<arg name='total' index='1' type='I' declared_type='NSUInteger'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='functioning'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='getGainWorks'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='init'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='lastErrorCode'>
+<retval type='i' declared_type='ALenum'/>
+</method>
+<method selector='loadBuffer:filePath:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<arg name='filePath' index='1' type='@' declared_type='NSString*'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='loadBufferFromData:soundData:format:size:freq:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<arg name='soundData' index='1' type='^v' declared_type='ALvoid*'/>
+<arg name='format' index='2' type='i' declared_type='ALenum'/>
+<arg name='size' index='3' type='i' declared_type='ALsizei'/>
+<arg name='freq' index='4' type='i' declared_type='ALsizei'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='loadBuffersAsynchronously:'>
+<arg name='loadRequests' index='0' type='@' declared_type='NSArray*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='masterGain'>
+<retval type='f' declared_type='ALfloat'/>
+</method>
+<method selector='openALContext'>
+<retval type='^{ALCcontext_struct=}' declared_type='ALCcontext*'/>
+</method>
+<method selector='playSound:sourceGroupId:pitch:pan:gain:loop:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<arg name='sourceGroupId' index='1' type='i' declared_type='int'/>
+<arg name='pitch' index='2' type='f' declared_type='float'/>
+<arg name='pan' index='3' type='f' declared_type='float'/>
+<arg name='gain' index='4' type='f' declared_type='float'/>
+<arg name='loop' index='5' type='B' declared_type='BOOL'/>
+<retval type='I' declared_type='ALuint'/>
+</method>
+<method selector='setAsynchLoadProgress:'>
+<arg name='asynchLoadProgress' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setMasterGain:'>
+<arg name='masterGain' index='0' type='f' declared_type='ALfloat'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setMixerSampleRate:' class_method='true'>
+<arg name='sampleRate' index='0' type='f' declared_type='Float32'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSourceGroupEnabled:enabled:'>
+<arg name='sourceGroupId' index='0' type='i' declared_type='int'/>
+<arg name='enabled' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSourceGroupNonInterruptible:isNonInterruptible:'>
+<arg name='sourceGroupId' index='0' type='i' declared_type='int'/>
+<arg name='isNonInterruptible' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='soundSourceForSound:sourceGroupId:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<arg name='sourceGroupId' index='1' type='i' declared_type='int'/>
+<retval type='@' declared_type='CDSoundSource*'/>
+</method>
+<method selector='sourceGroupEnabled:'>
+<arg name='sourceGroupId' index='0' type='i' declared_type='int'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='sourceGroupTotal'>
+<retval type='I' declared_type='NSUInteger'/>
+</method>
+<method selector='sourceTotal'>
+<retval type='i' declared_type='int'/>
+</method>
+<method selector='stopAllSounds'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='stopSound:'>
+<arg name='sourceId' index='0' type='I' declared_type='ALuint'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='stopSourceGroup:'>
+<arg name='sourceGroupId' index='0' type='i' declared_type='int'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='unloadBuffer:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+</class>
+<class name='CDSoundSource'>
+<method selector='durationInSeconds'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='gain'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='init:sourceIndex:soundEngine:'>
+<arg name='theSourceId' index='0' type='I' declared_type='ALuint'/>
+<arg name='index' index='1' type='i' declared_type='int'/>
+<arg name='engine' index='2' type='@' declared_type='CDSoundEngine*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='isPlaying'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='lastError'>
+<retval type='i' declared_type='ALenum'/>
+</method>
+<method selector='looping'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='pan'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='pitch'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='setGain:'>
+<arg name='gain' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setLooping:'>
+<arg name='looping' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setPan:'>
+<arg name='pan' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setPitch:'>
+<arg name='pitch' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSoundId:'>
+<arg name='soundId' index='0' type='i' declared_type='int'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='soundId'>
+<retval type='i' declared_type='int'/>
+</method>
+</class>
+<class name='CDUtilities'>
+<method selector='fullPathFromRelativePath:' class_method='true'>
+<arg name='relPath' index='0' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='NSObject'>
+<method selector='cdAudioSourceDidFinishPlaying:'>
+<arg name='audioSource' index='0' type='@' declared_type='CDLongAudioSource*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='cdAudioSourceFileDidChange:'>
+<arg name='audioSource' index='0' type='@' declared_type='CDLongAudioSource*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='enabled'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='mute'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='pause'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='play'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='rewind'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='setEnabled:'>
+<arg name='enabledValue' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setMute:'>
+<arg name='muteValue' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='stop'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+</class>
+<class name='SimpleAudioEngine'>
+<method selector='backgroundMusicVolume'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='effectsVolume'>
+<retval type='f' declared_type='float'/>
+</method>
+<method selector='end' class_method='true'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='isBackgroundMusicPlaying'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='pauseBackgroundMusic'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='playBackgroundMusic:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='playBackgroundMusic:loop:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<arg name='loop' index='1' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='playEffect:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='I' declared_type='ALuint'/>
+</method>
+<method selector='playEffect:pitch:pan:gain:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<arg name='pitch' index='1' type='f' declared_type='Float32'/>
+<arg name='pan' index='2' type='f' declared_type='Float32'/>
+<arg name='gain' index='3' type='f' declared_type='Float32'/>
+<retval type='I' declared_type='ALuint'/>
+</method>
+<method selector='preloadBackgroundMusic:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='preloadEffect:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='resumeBackgroundMusic'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='rewindBackgroundMusic'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setBackgroundMusicVolume:'>
+<arg name='backgroundMusicVolume' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setEffectsVolume:'>
+<arg name='effectsVolume' index='0' type='f' declared_type='float'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='sharedEngine' class_method='true'>
+<retval type='@' declared_type='SimpleAudioEngine*'/>
+</method>
+<method selector='soundSourceForFile:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='@' declared_type='CDSoundSource*'/>
+</method>
+<method selector='stopBackgroundMusic'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='stopEffect:'>
+<arg name='soundId' index='0' type='I' declared_type='ALuint'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='unloadEffect:'>
+<arg name='filePath' index='0' type='@' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='willPlayBackgroundMusic'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+</class>
+<informal_protocol name='CDAudioInterruptProtocol'>
+<method selector='enabled' type='B8@0:4'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='mute' type='B8@0:4'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='setEnabled:' type='v12@0:4B8'>
+<arg name='enabledValue' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setMute:' type='v12@0:4B8'>
+<arg name='muteValue' index='0' type='B' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+</informal_protocol>
+<informal_protocol name='CDAudioTransportProtocol'>
+<method selector='pause' type='B8@0:4'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='play' type='B8@0:4'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='rewind' type='B8@0:4'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='stop' type='B8@0:4'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+</informal_protocol>
+<informal_protocol name='CDLongAudioSourceDelegate'>
+<method selector='cdAudioSourceDidFinishPlaying:' type='v12@0:4@8'>
+<arg name='audioSource' index='0' type='@' declared_type='CDLongAudioSource*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='cdAudioSourceFileDidChange:' type='v12@0:4@8'>
+<arg name='audioSource' index='0' type='@' declared_type='CDLongAudioSource*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</informal_protocol>
+</signatures>

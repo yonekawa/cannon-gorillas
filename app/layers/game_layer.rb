@@ -57,6 +57,7 @@ class GameLayer < Joybox::Core::Layer
         @good_banana = nil
 
         @scene.score_layer.increment_score
+        SimpleAudioEngine.sharedEngine.playEffect('get.mp3')
       end
     end
 
@@ -69,6 +70,8 @@ class GameLayer < Joybox::Core::Layer
 
       @world.removeBody(@gorilla.body)
       self.removeChild(@gorilla)
+
+      SimpleAudioEngine.sharedEngine.playEffect('bomb.mp3')
 
       game_over
     end
@@ -97,6 +100,8 @@ class GameLayer < Joybox::Core::Layer
 
     @gorilla.body.apply_torque(torque: torque)
     @gorilla.body.apply_force(force: [distance_x, distance_y])
+
+    SimpleAudioEngine.sharedEngine.playEffect('jump.mp3')
   end
 
   def create_new_gorilla

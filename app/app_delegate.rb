@@ -14,8 +14,16 @@ class AppDelegate
     @window.setRootViewController(@navigation_controller)
     @window.makeKeyAndVisible
 
+    preload_resources
+
     @director << GameScene.new
     true
+  end
+
+  def preload_resources
+    SimpleAudioEngine.sharedEngine.preloadEffect('get.mp3')
+    SimpleAudioEngine.sharedEngine.preloadEffect('jump.mp3')
+    SimpleAudioEngine.sharedEngine.preloadEffect('bomb.mp3')
   end
 
   def applicationWillResignActive(app)
